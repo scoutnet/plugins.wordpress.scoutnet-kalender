@@ -1,10 +1,10 @@
 <?php
 /*
-  Plugin Name: Scoutnet Kalender
+  Plugin Name: ScoutNet Kalender
   Plugin URI: http://www.dpsg-paderborn.de/drin/2012/05/endlich-das-scoutnet-kalender-wordpress-plugin/
-  Description: Zeigt Termine und Details aus dem Scoutnet-Kalender in Seiten, Artikeln und einem Widget an.
-  Version: 1.1.4
-  Author: Scoutnet und Bj&ouml;rn Stromberg
+  Description: Zeigt Termine und Details aus dem ScoutNet-Kalender in Seiten, Artikeln und einem Widget an.
+  Version: 2.0.0-alpha
+  Author: ScoutNet und Björn Stromberg
   Author URI: http://www.scoutnet.de/
   Text Domain: scoutnet_kalender
   License: GPLv2
@@ -138,7 +138,7 @@ class ScoutnetKalenderWidget extends WP_Widget {
     }
 
     function widget($args, $instance, $ajaxcall = false) {
-    	// alle �bergebenen Variablen verarbeiten
+    	// parse all passed arguments
         extract($args, EXTR_SKIP);
 		$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 		$ssid = (empty($instance['ssid']) || !preg_match('/^[0-9]+$/', $instance['ssid'])) ? '3' : $instance['ssid'];
@@ -152,7 +152,7 @@ class ScoutnetKalenderWidget extends WP_Widget {
 	        // Zeit beim initialen Seitenaufruf und DOM-Rendering einsparen wollen
         	$events = ScoutnetKalender::getSnEvents($ssid, $elementcount);
         	
-        // manch anderes ben�tigen wir ausschlie�lich zur Vorbereitung des AJAX-Abrufs
+        // manch anderes benötigen wir ausschließlich zur Vorbereitung des AJAX-Abrufs
 	    } else {
 	    	// Widget-Einleitung (<li> und <h2> und co)
 			echo $before_widget;			
@@ -163,7 +163,7 @@ class ScoutnetKalenderWidget extends WP_Widget {
 			// Wordpress anweisen unsere JS-File ins Dokument zu laden (scoutnet_kalender_ajax.js)
 			wp_enqueue_script( 'snk-ajax-request', plugin_dir_url( __FILE__ ) . 'scoutnet_kalender_ajax.js', array( 'jquery' ) );
 			 
-			// f�r den AJAX-Request brauchen wir eine URL (wp-admin/admin-ajax.php) und alle der Widget-Funktion �bergebenen Daten (wir encodieren das hier der Einfachheit halber in JSON)
+			// für den AJAX-Request brauchen wir eine URL (wp-admin/admin-ajax.php) und alle der Widget-Funktion übergebenen Daten (wir encodieren das hier der Einfachheit halber in JSON)
 			wp_localize_script( 'snk-ajax-request', 'SNK_ajax',
 				array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -187,7 +187,7 @@ class ScoutnetKalenderWidget extends WP_Widget {
         	require (plugin_dir_path(__FILE__).'templates/widget_kalender_list.php');
         }
         
-        // einen Teil der Magie brauchen wir nur beim beim den AJAX vorbereitenden Abruf
+        // einen Teil der Magie brauchen wir nur bei den AJAX vorbereitenden Abruf
         if ($ajaxcall !== true) {
         	// Widget-Ausleitung (</li> und co)
         	echo $after_widget;
@@ -195,14 +195,18 @@ class ScoutnetKalenderWidget extends WP_Widget {
     }
 	
 	function ajax_widget() {
-		// zur Sicherheit (best practice) haben wir eine einmalige "nonce" generiert, die nur f�r diesen einen Abruf g�ltig ist
-		// das sorgt daf�r, dass niemand unsere AJAX-Schnittstelle f�r sich selbst benutzen kann
+        /**
+         * zur Sicherheit (best practice) haben wir eine einmalige "nonce" generiert, die nur für diesen einen Abruf gültig ist
+         * das sorgt dafür, dass niemand unsere AJAX-Schnittstelle für sich selbst benutzen kann
+         */
 		if (!wp_verify_nonce( $_POST['snk_nonce'], 'snk-call-nonce' )) {
 			die('Fehler beim Abruf!');
 		}
 		
-		// beim Aufruf aus JS haben wir die Variablen snk_args und snk_data
-		// damit k�nnen wir einfach die �bliche Widget-Funktion ansteuern und fertig
+		/**
+         * beim Aufruf aus JS haben wir die Variablen snk_args und snk_data
+		 * damit kännen wir einfach die übliche Widget-Funktion ansteuern und fertig
+         */
 		$args = json_decode(stripslashes($_POST['snk_args']), true);
 		$instance = json_decode(stripslashes($_POST['snk_data']), true);
 				

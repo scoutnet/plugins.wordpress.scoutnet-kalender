@@ -6,14 +6,14 @@ date_default_timezone_set('Europe/Berlin');
 	// Wenn der Aufruf (noch) nicht per AJAX kam, dann dient er zur Vorbereitung der AJAX-Abfrage
 	if ($ajaxcall !== true) {
 		// Daher bauen wir an dieser Stelle das Ziel-DIV zusammen, in das wir dann beim zweiten Lauf die Daten reinladen wollen.
-		// (Sonst hätten wir ja das DIV doppelt)
-		// Die Mindesthöhe von 251px ist aus dem gerenderten Ergebnis entnommen, nachdem das komplette DOM nach dem
+		// (Sonst hÃ¤tten wir ja das DIV doppelt)
+		// Die MindesthÃ¶he von 251px ist aus dem gerenderten Ergebnis entnommen, nachdem das komplette DOM nach dem
 		// fertigen AJAX-Request gerendert wurde. Damit der Seiteninhalt nicht herumspringt.
 		?>
 		<div class="<?php echo $wrapclassname; ?>" style="min-height: 251px;">Lade Scoutnet-Daten ...</div>
 		<?php
 	
-	// Wenn dieser Aufruf jetzt via AJAX kam, wir dieser Content ausgeben der das DIV füllt.
+	// Wenn dieser Aufruf jetzt via AJAX kam, wir dieser Content ausgeben der das DIV fÃ¼llt.
 	} else {
 		setlocale (LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge');
 		foreach($events as $event) { /* @var $event SN_Model_Event */

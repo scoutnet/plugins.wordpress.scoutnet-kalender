@@ -1,15 +1,15 @@
-// Man könnte den Aufruf auch per DOM-ready machen, davon ausgehend,
+// Man kÃ¶nnte den Aufruf auch per DOM-ready machen, davon ausgehend,
 // dass Wordpress unser JS jedoch ans Ende des Dokumentes packt, ist das DOM
-// schon fertig, wenn dieses Skript geladen und ausgeführt wird
+// schon fertig, wenn dieses Skript geladen und ausgefÃ¼hrt wird
 //
 //jQuery(document).ready(function()
 //{
-	// nur AJAX-Request ausführen, wenn das Zieldiv im DOM vorhanden ist
-	// da der Name der Klasse in der Adminoberfläche beliebig einstellbar ist,
-	// müssen wir den hier natürlich kennen
+	// nur AJAX-Request ausfÃ¼hren, wenn das Zieldiv im DOM vorhanden ist
+	// da der Name der Klasse in der AdminoberflÃ¤che beliebig einstellbar ist,
+	// mÃ¼ssen wir den hier natÃ¼rlich kennen
 	// kommt aus SNK_ajax.wrapclassname
 	// wir verwenden eine Klasse statt einer ID, da wir den Content so auch in mehrere
-	// Elemente reinladen könnten (wenn das gewünscht ist)
+	// Elemente reinladen kÃ¶nnten (wenn das gewÃ¼nscht ist)
 	if(jQuery('.' + SNK_ajax.wrapclassname).length >= 1) {
 		jQuery.post(
 			SNK_ajax.ajaxurl,
@@ -22,7 +22,7 @@
 			function(daten) {
 				// wenn Daten rauskommen
 				if(daten.length > 0 && daten != '-1') {
-					// abgefragte Daten unverändert ins DOM einfügen
+					// abgefragte Daten unverÃ¤ndert ins DOM einfÃ¼gen
 					jQuery('.' + SNK_ajax.wrapclassname).html(daten);
 				} else {
 					// ansonsten tun wir sicherheitshalber mal nix und returnen
