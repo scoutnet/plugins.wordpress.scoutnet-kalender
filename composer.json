@@ -1,0 +1,5 @@
+{
+    "require": {
+        "scoutnet/sn-webservice": "^1.0"
+    }
+}

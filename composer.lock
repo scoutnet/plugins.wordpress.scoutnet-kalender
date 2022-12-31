@@ -1,0 +1,73 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "565a79d291e897f2d67686b7b51c9dc0",
+    "packages": [
+        {
+            "name": "scoutnet/sn-webservice",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/scoutnet/plugins.sn_webservice.git",
+                "reference": "f72da192bdeace7a52460e533afc25c4834938a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/scoutnet/plugins.sn_webservice/zipball/f72da192bdeace7a52460e533afc25c4834938a7",
+                "reference": "f72da192bdeace7a52460e533afc25c4834938a7",
+                "shasum": ""
+            },
+            "replace": {
+                "sn_webservice": "self.version"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-development": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ScoutNet\\Api\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Stefan Horst",
+                    "email": "muetze@scoutnet.de",
+                    "homepage": "https://www.scoutnet.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This class is needed to comunicate with the scoutnet.de server.",
+            "homepage": "https://github.com/scoutnet/plugins.sn_webservice",
+            "keywords": [
+                "Pfadfinder",
+                "ScoutNet",
+                "ScoutNet API"
+            ],
+            "support": {
+                "issues": "https://github.com/scoutnet/plugins.sn_webservice/issues",
+                "source": "https://github.com/scoutnet/plugins.sn_webservice/tree/1.0.3"
+            },
+            "time": "2020-06-20T18:23:08+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

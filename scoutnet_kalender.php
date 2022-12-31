@@ -69,9 +69,10 @@ class ScoutnetKalender {
     }
 
     public static function getSnEvents($ssid, $elementcount = 0) {
-        require_once 'lib/scoutnet_webservice/class.tx_shscoutnetwebservice_sn.php';
+		// load Autoloader from composer
+		require_once('vendor/autoload.php');
 
-        $SN = new tx_shscoutnetwebservice_sn();
+        $SN = new \ScoutNet\Api\ScoutnetApi();
 
 		if ($elementcount == 0) {
 			$filter = array(
