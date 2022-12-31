@@ -20,22 +20,22 @@ date_default_timezone_set('Europe/Berlin');
 		?>
 		<div class="<?php echo $wrapclassname; ?>" style="min-height: 235px;">Lade Kalenderdaten...</div>
 		<?php
-	
+
 	// wenn der Aufruf jedoch per AJAX kam, ganz normal Content ausgeben, mit dem wir unseren DIV f�llen wollen
 	} else {
 		foreach($events as $event) { /* @var $event SN_Model_Event */
 		?>
 			<div>
-				<strong><?php echo date('d.n.Y', $event->Start); ?> <?php echo gmdate('G:i', $event->Start); ?> <?php echo $event->Location; ?></strong><br />
+				<strong><?php echo $event->getStartDate()->format("d.n.Y G:i"); ?> <?php echo $event->getLocation(); ?></strong><br />
 				<?php
-				if (trim($event->URL)=="") {
-					echo $event->Title;
+				if (trim($event->getURL())=="") {
+					echo $event->getTitle();
 					}
 				else { ?>
-					<a href="<?php echo $event->URL; ?>"><?php echo $event->Title; ?></a>
+					<a href="<?php echo $event->getURL(); ?>"><?php echo $event->getTitle(); ?></a>
 				<?php } ?>
 			</div>
-			
+
 			<br />
 		<?php
 		}
