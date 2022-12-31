@@ -98,8 +98,8 @@ class ScoutnetKalenderWidget extends WP_Widget {
 
 	// aka __construct
     function ScoutnetKalenderWidget() {
-        $widget_ops = array('classname' => 'ScoutnetKalenderWidget', 'description' => 'Anzeige von Scoutnet-Kalendern');
-        $this->WP_Widget('ScoutnetKalenderWidget', 'Scoutnet Kalender', $widget_ops);
+		$widget_ops = array('classname' => 'ScoutnetKalenderWidget', 'description' => 'Anzeige von Scoutnet-Kalendern');
+		parent::__construct('ScoutnetKalenderWidget', 'Scoutnet Kalender', $widget_ops);
 
 		// AJAX actions
 		// if both logged in and not logged in users can send this AJAX request,
