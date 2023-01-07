@@ -10,7 +10,7 @@
   License: GPLv2
  */
 
-class ScoutnetKalender {
+class ScoutnetKalender extends \WP_Widget {
 
     public static $VERSION = '0.2.0';
     public static $SNK_DIR;
@@ -30,7 +30,7 @@ class ScoutnetKalender {
         add_shortcode('snk', array(&$this, 'inline_kalender'));
 
         // widget
-        add_action('widgets_init', function() { return register_widget("ScoutnetKalenderWidget"); });
+        parent::__construct("ScoutnetKalenderWidget", "Scoutnet Kalender widget");
     }
 
     public function init() {
