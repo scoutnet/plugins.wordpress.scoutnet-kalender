@@ -1,23 +1,24 @@
 <?php
-/*
-  Plugin Name: ScoutNet Kalender
-  Plugin URI: http://www.dpsg-paderborn.de/drin/2012/05/endlich-das-scoutnet-kalender-wordpress-plugin/
-  Description: Zeigt Termine und Details aus dem ScoutNet-Kalender in Seiten, Artikeln und einem Widget an.
-  Version: 2.0.0-alpha
-  Author: ScoutNet und Björn Stromberg
-  Author URI: http://www.scoutnet.de/
-  Text Domain: scoutnet_kalender
-  License: GPLv2
+/**
+ * Plugin Name:     ScoutNet Kalender
+ * Plugin URI:      https://github.com/scoutnet/plugins.wordpress.scoutnet-kalender
+ * Description:     Zeigt Termine und Details aus dem ScoutNet-Kalender in Seiten, Artikeln und einem Widget an.
+ * Version:         2.0.0-alpha.2
+ * Author:          ScoutNet und Björn Stromberg
+ * Author URI:      https://www.scoutnet.de/
+ * Text Domain:     scoutnet-kalender
+ * License:         GPLv2
+ * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
+ * Requires PHP:    7.4
  */
 
-class ScoutnetKalender extends \WP_Widget {
+class ScoutnetKalender {
 
     public static $VERSION = '0.2.0';
     public static $SNK_DIR;
     public static $SNK_URL;
 
     public function __construct() {
-
         // define some statics
         ScoutnetKalender::$SNK_DIR = WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'scoutnet-kalender'; //plugin_basename( dirname(__file__) );
         ScoutnetKalender::$SNK_URL = WP_PLUGIN_URL . DIRECTORY_SEPARATOR . 'scoutnet-kalender'; //plugin_basename( dirname(__file__) );
@@ -30,7 +31,7 @@ class ScoutnetKalender extends \WP_Widget {
         add_shortcode('snk', array(&$this, 'inline_kalender'));
 
         // widget
-        parent::__construct("ScoutnetKalenderWidget", "Scoutnet Kalender widget");
+        add_action('widgets_init', function () { register_widget(ScoutnetKalenderWidget::class );});
     }
 
     public function init() {
@@ -49,8 +50,8 @@ class ScoutnetKalender extends \WP_Widget {
 
     public function inline_kalender($attr) {
     	
-	$ssid = isset($attr['ssid']) ? $attr['ssid'] : get_option('scoutnet_kalender_ssid');
-	$elementcount = isset($attr['elementcount']) ? $attr['elementcount'] : '0';
+	$ssid = $attr['ssid'] ?? get_option('scoutnet_kalender_ssid');
+	$elementcount = $attr['elementcount'] ?? '0';
 	$externalTemplateName = isset($attr['externaltemplatename']) ? basename($attr['externaltemplatename']) : ''; // remember: wordpress always returns small case'd values for shortcodes.
 	$events = ScoutnetKalender::getSnEvents($ssid, $elementcount);
 	$buffer = ob_start();
@@ -65,10 +66,10 @@ class ScoutnetKalender extends \WP_Widget {
     }
 
     public function activation_hook() {
-        
     }
 
-    public static function getSnEvents($ssid, $elementcount = 0) {
+    public static function getSnEvents($ssid, $elementcount = 0): array
+    {
 		// load Autoloader from composer
 		require_once('vendor/autoload.php');
 
@@ -97,7 +98,7 @@ class ScoutnetKalender extends \WP_Widget {
 class ScoutnetKalenderWidget extends WP_Widget {
 
 	// aka __construct
-    function ScoutnetKalenderWidget() {
+    function __construct() {
 		$widget_ops = array('classname' => 'ScoutnetKalenderWidget', 'description' => 'Anzeige von Scoutnet-Kalendern');
 		parent::__construct('ScoutnetKalenderWidget', 'Scoutnet Kalender', $widget_ops);
 
@@ -127,7 +128,8 @@ class ScoutnetKalenderWidget extends WP_Widget {
 <?php
     }
 
-    function update($new_instance, $old_instance) {
+    function update($new_instance, $old_instance): array
+    {
         $instance = $old_instance;
         $instance['title'] = $new_instance['title'];
         $instance['ssid'] = (empty($new_instance['ssid']) || !preg_match('/^[0-9]+$/', $new_instance['ssid'])) ? '3' : $new_instance['ssid'];
